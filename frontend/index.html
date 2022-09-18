@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display a map on a webpage</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { width: 400px; height: 600px; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<button type='button' id="btn-print">Print</button>
+<button type='button' id="btn-vienna">Back to Vienna</button>
+<script>
+	mapboxgl.accessToken = 'ACCESS_TOKEN';
+  const map = new mapboxgl.Map({
+      container: 'map', // container ID
+      style: 'STYLE_URL', // style URL
+      center: [16.3846, 48.2115], // starting position [lng, lat]
+      zoom: 10.5
+  });
+
+  document.querySelector('#btn-print').addEventListener('click', () => {
+    const c = map.getCenter();
+    const z = map.getZoom();
+    console.log(c, z);
+    const req = new XMLHttpRequest();
+    req.open("GET", `http://localhost:3000/print?lat=${c.lat}&lng=${c.lng}&zoom=${z}`);
+    req.send();
+    return false;
+  });
+
+  document.querySelector('#btn-vienna').addEventListener('click', () => {
+    map.setCenter({
+      lng: 16.3846,
+      lat: 48.2115
+    });
+    map.setZoom(10.5);
+    return false;
+  });
+    
+</script>
+
+</body>
+</html>

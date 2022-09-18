@@ -156,6 +156,11 @@ def cmds_print_img(img, dark_mode=False):
 
     PRINTER_MODE = CMD_PRINT_TEXT if dark_mode else CMD_PRINT_IMG
 
+#        cmd_feed_paper(25) + \
+#        CMD_SET_PAPER + \
+#        CMD_SET_PAPER + \
+#        CMD_SET_PAPER + \
+
     data = \
         CMD_GET_DEV_STATE + \
         CMD_SET_QUALITY_200_DPI + \
@@ -163,10 +168,6 @@ def cmds_print_img(img, dark_mode=False):
     for row in img:
         data += cmd_print_row(row)
     data += \
-        cmd_feed_paper(25) + \
-        CMD_SET_PAPER + \
-        CMD_SET_PAPER + \
-        CMD_SET_PAPER + \
         CMD_LATTICE_END + \
         CMD_GET_DEV_STATE
     return data
